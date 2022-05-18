@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${produto.nome}"></title>
+    <link rel="shortcut icon" href="img/ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!--Menu principal-->
+   <header th:replace="~{base :: menu-principal}"></header>
+
+    <main class="container-fluid">
+        <section class="row">
+            <div class="col-md-2 border-end">
+                <div th:replace="~{base :: menu-conta}"></div>
+            </div>
+
+            <div class="col-md-10 mt-4 mb-4">
+                <div class="container">
+                	<div th:if="${contatovazio == 0}" class="alert bg-azul-branco-claro text-azul" role="alert">
+						<i class="bi bi-exclamation-triangle-fill"></i> Preencha o número de contato e facebook para que seus anuncios possam ser publicados!
+					</div>
+					
+                    <h2 class="fw-normal pb-4">Editar anúncio "<span th:text="${produto.nome}"></span>" </h2>
+                </div>
+                <div class="border-bottom"></div>
+                <div class="container mt-3 mb-3">
+                    <form th:object="${requisicaoEditarAnuncio}" th:action="@{/dashboard/editar-anuncio}" method="post" enctype="multipart/form-data">
+                    	<input type="hidden" th:name="idProduto" th:value="${produto.id}">
+                        <div class="row">
+							
+                            <div class="col-md-4 mt-2">
+                                <label class="fw-bold">Nome do produto</label>
+                                <input th:errorclass="is-invalid" th:name="nome" th:value="${produto.nome}" type="text" class="form-control" placeholder="Produto">
+                                <div class="invalid-feedback" th:errors="*{nome}">
+                                	erro
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mt-2">
+                                <label class="fw-bold">Condição</label>
+                                <select th:errorclass="is-invalid" th:name="condicao" class="form-select">
+                                    <option selected value="">Selecione a condição</option>
+                                    <option th:each="condicao : ${T(br.com.abusei.Abusei.models.Condicao).values()}" th:value="${condicao}" th:text="${condicao}" th:selected="${produto.condicao == condicao}"></option>
+                                </select>
+                                <div class="invalid-feedback" th:errors="*{condicao}">
+                                	erro
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mt-2">
+                                <label class="fw-bold">Preço à vista</label>
+                                <input th:errorclass="is-invalid" th:name="precoVista" th:value="${produto.precoVista}" type="number" class="form-control" placeholder="Preço do produto">
+                                <div class="invalid-feedback" th:errors="*{precoVista}">
+                                	erro
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mt-2">
+                                <label class="fw-bold">Preço cortado</label>
+                                <input th:name="precoCortado" th:value="${produto.precoCortado}" type="number" class="form-control" placeholder="Preço antigo para promoção">
+                                <small class="fonte-pp text-secondary">Deve ser maior que o Preço à vista</small>
+                            </div>
+
+                            <div class="col-md-4 mt-2">
+                                <label class="fw-bold">Preço no cartão  </label>
+                                <input th:name="precoCartao" th:value="${produto.precoCartao}" type="number" class="form-control" placeholder="Preço do produto no cartão">
+                                <small class="fonte-pp text-secondary">Deve ser maior ou igual que o Preço à vista</small>
+                            </div>
+
+                            <div class="col-md-4 mt-2">
+                                <label class="fw-bold">Parcelas no cartão</label>
+                                <input th:errorclass="is-invalid" th:name="parcelasCartao" th:value="${produto.parcelasCartao}" type="number" class="form-control" placeholder="Quantidade de vezes no cartão">
+                                <div class="invalid-feedback" th:errors="*{parcelasCartao}">
+                                	erro
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mt-2">
+                                <label class="fw-bold">Categoria</label>
+                                <select th:errorclass="is-invalid" th:name="idCategoria" class="form-select">
+                                    <option selected value="">Escolha a categoria</option>
+                                    <optgroup th:each="categoria : ${categorias}" th:label="${categoria.categoria}">
+                                    	<option th:each="subcategoria : ${categoria.subcategorias}" th:text="${subcategoria.subcategoria}" th:value="${subcategoria.id}" th:selected="${produto.subcategoria.id == subcategoria.id}"></option>
+                                    </optgroup>
+                                </select>
+                                <div class="invalid-feedback" th:errors="*{idCategoria}">
+                                	erro
+                                </div>
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <label class="fw-bold">Localização</label> 
+                                <select th:name="cidade" th:errorclass="is-invalid" class="form-select">
+									<option selected value="">Sua localização</option>
+									<optgroup th:each="estado : ${estados}" th:label="${estado.estado}">
+										<option th:each="cidade : ${estado.cidades}" th:text="${cidade.cidade}" th:value="${cidade.cidade}" th:selected="${produto.cidade.cidade == cidade.cidade}"></option>
+									</optgroup>
+								</select>
+								<div class="invalid-feedback" th:errors="*{cidade}">
+                                	erro
+                                </div>
+							</div>
+
+                            <div class="col-md-6 mt-2">
+                                <label class="fw-bold" for="">Clique e escolha suas imagens</label>
+                                    <div class="form-control imagem-anuncio border-2" th:classappend="${erro == true} ? 'border-danger'">
+                                        <input accept="image/*" th:disabled="${imagens.size == 4}" th:name="file" type="file" id="capa" class="inputfile"/>
+                                        <label for="capa" class="center" style="outline: none;">
+                                        <img th:if="${produto.imagem == null}" src="/img/imagem.svg" height="150" alt="" >
+                                        <img th:if="${produto.imagem != null}" th:src="${produto.imagem}" height="150" alt="" >
+                                            <!-- <img th:if="${imagens.size == null}" src="/img/imagem.svg" height="150" alt="" >
+                                            <img th:if="${imagens.size == 4}" src="/img/imagem2.svg" height="150" alt="" > -->
+                                        </label>
+                                        <small class="center fonte-pp text-secondary">8MB é o limite máximo para suas imagens</small>
+                                    </div>
+                                    <!-- <div th:if="${erro == true}" class="text-danger mt-1 fonte-p">
+                                    	Suas imagens ultrapassaram o limite!
+                                    </div>
+                                    <div th:if="${imagens.size == 4}" class="text-danger mt-1 fonte-p">
+                                    	Seu anúncio atingiu o número máximo de imagens (4)!
+                                    </div> -->
+                            </div>
+
+                            <div class="col-md-6 mt-2">
+                                <label class="fw-bold" for="">Descrição do produto</label>
+                                <textarea th:name="descricao" class="form-control textarea-anuncio" th:text="${produto.descricao}" placeholder="Descrição com todas as informações do produto"></textarea>
+                            </div>
+
+                        </div>
+
+                        <button th:if="${contatovazio == 0}" class="mt-3 text-white fw-bold btn btn-secondary botao" disabled="disabled">Publicar</button>
+                        <button th:if="${contatovazio == null}" class="mt-3 text-white fw-bold btn botao bg-azul-claro">Publicar</button>
+                        
+                    </form>
+	                  	<!-- <div class="row mt-2">
+	                   
+	                    <div th:each="imagem : ${imagens}" class="col-6 col-sm-3">
+	                   		<form th:action="@{/dashboard/deletarImagem}" method="post">
+	                   			<input type="hidden" name="idImagem" th:value="${imagem.id}">
+	                   			<input type="hidden" name="idProduto" th:value="${produto.id}">
+	                   			<button class="btn-close" aria-label="Close"></button>
+	                   		</form>
+	                   		
+	                   		 <img class="col-12" th:alt="${imagem.produto.nome}" th:src="${imagem.urlImagem}"> 
+	                   	</div>-->
+	                   </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer th:replace="~{base :: footer}"></footer>
+    <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

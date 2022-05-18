@@ -1,0 +1,233 @@
+
+<!--MENU PRINCIPAL-->
+<header th:fragment="menu-principal" class="p-3 bg-header border-bottom sticky-top">
+	<div class="container-fluid d-none d-sm-none d-md-block">
+		<div class="d-flex justify-content-between">
+			<div class="d-flex justify-content-between">
+				<a th:href="@{/inicio}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none fw-bold lead"> <img th:src="@{/img/logo-abusei.png}">
+				</a>
+				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0 px-2">
+					<li><a th:href="@{/mapa-do-site}" class="nav-link text-azul">Mapa do site</a></li>
+					<li><a th:href="@{/produtos}" class="nav-link px-2 text-azul">Produtos</a></li>
+				</ul>
+			</div>
+			<div class="d-flex justify-content-between">
+				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
+					<li sec:authorize="isAuthenticated()" class="text-azul nav dropdown justify-content-center align-items-center">
+						<a th:href="@{/dashboard/cadastrar-anuncio}" class="text-decoration-none text-azul mx-3 botao">
+							<i class="bi bi-plus-circle"></i> Publicar Anúncio 
+						</a>
+					</li>
+					<li sec:authorize="isAuthenticated()" class="text-azul nav dropdown justify-content-center align-items-center dropdown-toggle"><img
+						th:if="${(perfil?.fotoPerfil == null) or (#strings.isEmpty(perfil?.fotoPerfil))}" src="/img/perfil-sem-foto.png" width="32" height="32" class="rounded-circle mx-2"> <img
+						th:if="${(perfil?.fotoPerfil != null)}" th:src="${perfil?.fotoPerfil}" width="32" height="32" class="rounded-circle mx-2" style="object-fit: cover;"> <a href="#" id="dropdownUser1"
+						data-bs-toggle="dropdown" aria-expanded="false" class="text-decoration-none text-azul fs-6" th:text="${perfil?.nome}"> </a>
+
+						<ul class="dropdown-menu mx-0 shadow" style="width: 220px;">
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/relatorio}"> <i class="bi bi-speedometer"></i> Meu Relatório
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/produtos}"> <i class="bi bi-grid"></i> Meus Anúncios
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/favoritos}"> <i class="bi bi-heart"></i> Favoritos
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{'/@' + ${perfil?.username}}"> <i class="bi bi-person-circle"></i> Perfil Público
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/configuracoes}"> <i class="bi bi-gear"></i> Configurações
+							</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a onclick="document.querySelector('#sair').submit()" class="dropdown-item dropdown-item-danger d-flex gap-2 align-items-center text-dark" href="#"> <i class="bi bi-door-open"></i>
+									Sair
+							</a>
+								<form id="sair" th:action="@{/sair}"></form></li>
+						</ul></li>
+					<li sec:authorize="!isAuthenticated()" class="text-azul nav dropdown justify-content-center align-items-center"><a th:href="@{/entrar}" class="text-decoration-none text-azul mx-3 botao">
+							Entrar </a></li>
+					<li sec:authorize="!isAuthenticated()" class="text-azul nav dropdown justify-content-center align-items-center"><a th:href="@{/cadastrar}"
+						class="text-decoration-none text-white btn botao bg-azul"> Cadastrar </a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container d-md-none">
+		<div class="d-flex justify-content-between">
+			<div class="d-flex align-items-center">
+				<a th:href="@{/inicio}" class="align-items-center text-dark text-decoration-none"> <img src="/img/logo-abusei.png" alt="logo" width="140">
+				</a>
+			</div>
+
+			<div class="d-flex align-items-center">
+				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
+					<li sec:authorize="isAuthenticated()" class="text-azul nav dropdown justify-content-center align-items-center dropdown-toggle"><a href="#" id="dropdownUser1" data-bs-toggle="dropdown"
+						aria-expanded="false" class="text-decoration-none text-azul"> <img th:if="${(perfil?.fotoPerfil == null) or (#strings.isEmpty(perfil?.fotoPerfil))}" src="/img/perfil-sem-foto.png" width="32"
+							height="32" class="rounded-circle mx-2"> <img th:if="${(perfil?.fotoPerfil != null)}" th:src="${perfil?.fotoPerfil}" width="32" height="32" class="rounded-circle mx-2"
+							style="object-fit: cover;">
+					</a>
+
+						<ul class="dropdown-menu mx-0 shadow" style="width: 220px;">
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/relatorio}"> <i class="bi bi-speedometer"></i> Meu Relatório
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/produtos}"> <i class="bi bi-grid"></i> Meus Anúncios
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/favoritos}"> <i class="bi bi-heart"></i> Favoritos
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{'/@' + ${perfil?.username}}"> <i class="bi bi-person-circle"></i> Perfil Público
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/configuracoes}"> <i class="bi bi-gear"></i> Configurações
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/dashboard/cadastrar-anuncio}"> <i class="bi bi-plus-circle"></i> Cadastrar Anúncio
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/produtos}"> <i class="bi bi-view-list"></i> Produtos
+							</a></li>
+							<li><a class="dropdown-item d-flex gap-2 align-items-center text-dark" th:href="@{/mapa-do-site}"> <i class="bi bi-map"></i> Mapa do Site
+							</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a onclick="document.querySelector('#sair').submit()" class="dropdown-item dropdown-item-danger d-flex gap-2 align-items-center text-dark" href="#"> <i class="bi bi-door-open"></i>
+									Sair
+							</a>
+								<form id="sair" th:action="@{/sair}"></form></li>
+						</ul></li>
+
+					<li sec:authorize="!isAuthenticated()" class="text-azul nav dropdown justify-content-center align-items-center"><a href="#" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"
+						class="fs-3 text-decoration-none text-azul"> <ion-icon name="ellipsis-vertical"></ion-icon>
+					</a>
+
+						<ul class="dropdown-menu mx-0 shadow" style="width: 220px;">
+							<li class="container-fluid">
+								<div class="row center p-2">
+									<a th:href="@{/entrar}" class="col-6 text-decoration-none text-azul botao p-2 fonte-p"> Entrar </a> <a th:href="@{/cadastrar}"
+										class="col-6 text-decoration-none text-white btn botao p-1 bg-azul fonte-p"> Cadastrar </a>
+								</div>
+							</li>
+							<li class="text-center mt-2"><a th:href="@{/produtos}" class="text-decoration-none text-azul p-2">Produtos</a></li>
+							<li class="text-center mt-2  pb-2"><a th:href="@{/mapa-do-site}" class="text-decoration-none text-azul">Mapa do site</a></li>
+						</ul></li>
+
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+
+</header>
+
+<!--FOOTER-->
+<footer th:fragment="footer" style="vertical-align: bottom; padding-top: 15px; background: #d8e3ff; width: 100%;" class="p-4">
+	<h4 style="text-align: center; font-size: 15px" class="text-azul">
+		Copyright © 2021 Todos direitos <a class="text-decoration-none text-azul">reservados</a>
+	</h4>
+
+	<ul class="center redes-sociais navbar-nav" style="flex-direction: row;">
+		<li class="nav-item"><a style="font-size: 20px" target="_blank" href="https://instagram.com/vitucelio"> <ion-icon name="logo-instagram"></ion-icon>
+		</a></li>
+
+		<li class="nav-item"><a style="font-size: 20px" target="_blank" href="https://github.com/vitorcelio"> <ion-icon name="logo-github"></ion-icon>
+		</a></li>
+
+		<li class="nav-item"><a style="font-size: 20px" target="_blank" href="https://twitter.com/vitucelio"> <ion-icon name="logo-twitter"></ion-icon>
+		</a></li>
+
+		<li class="nav-item"><a style="font-size: 20px" target="_blank" href="https://www.facebook.com/pessoa.vitor.16"> <ion-icon name="logo-facebook"></ion-icon>
+		</a></li>
+
+		<li class="nav-item"><a style="font-size: 20px" target="_blank" href="https://www.linkedin.com/in/vitorcelio"> <ion-icon name="logo-linkedin"></ion-icon>
+		</a></li>
+	</ul>
+
+</footer>
+
+<!-- NADA ENCONTRADO -->
+<div th:fragment="nada-encontrado" class="p-5">
+	<img src="/img/nada-encontrado.svg" class="img-center" width="30%" alt="">
+	<h4 class="text-center text-azul">Nada encontrado!</h4>
+</div>
+
+<!--MENU DA CONTA-->
+<div th:fragment="menu-conta" class="row mt-2 mb-3">
+
+	<div class="col-3 col-md-12 mt-2">
+		<a th:href="@{/dashboard/relatorio}" class="text-decoration-none text-azul-claro">
+			<div class="py-2" th:classappend="${pagina} == 'relatorio' ? 'ativo2'">
+				<p class="m-0 ms-3">
+					<i class="bi bi-speedometer"></i> Relatório
+				</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-3 col-md-12 mt-2">
+		<a th:href="@{/dashboard/produtos}" class="text-decoration-none text-azul-claro">
+			<div class="py-2" th:classappend="${pagina} == 'produtos' ? 'ativo2'">
+				<p class="m-0 ms-3">
+					<i class="bi bi-grid"></i> Anúncios
+				</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-3 col-md-12 mt-2">
+		<a th:href="@{/dashboard/favoritos}" class="text-decoration-none text-azul-claro">
+			<div class="py-2" th:classappend="${pagina} == 'favoritos' ? 'ativo2'">
+				<p class="m-0 ms-3">
+					<i class="bi bi-heart"></i> Favoritos
+				</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-3 col-md-12 mt-2">
+		<a th:href="@{'/@'+${perfil.username}}" class="text-decoration-none text-azul-claro">
+			<div class="py-2">
+				<p class="m-0 ms-3">
+					<i class="bi bi-person-circle"></i> Perfil
+				</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-3 col-md-12 mt-2">
+		<a th:href="@{/dashboard/cadastrar-anuncio}" class="text-decoration-none text-azul-claro">
+			<div class="py-2" th:classappend="${pagina} == 'cadastrar' ? 'ativo2'">
+				<p class="m-0 ms-3">
+					<i class="bi bi-plus-circle"></i> Adicionar anúncio
+				</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-3 col-md-12 mt-2">
+		<a th:href="@{/dashboard/comentarios}" class="text-decoration-none text-azul-claro">
+			<div class="py-2" th:classappend="${pagina} == 'comentario' ? 'ativo2'">
+				<p class="m-0 ms-3">
+					<i class="bi bi-chat-dots"></i> Comentários
+				</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-3 col-md-12 mt-2">
+		<a th:href="@{/dashboard/configuracoes}" class="text-decoration-none text-azul-claro">
+			<div class="py-2" th:classappend="${pagina} == 'configuracoes' ? 'ativo2'">
+				<p class="m-0 ms-3">
+					<i class="bi bi-gear"></i> Configurações
+				</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-3 col-md-12 mt-sair">
+		<a href="" class="text-decoration-none text-azul-claro">
+			<div class="py-2">
+				<p class="m-0 ms-3">
+					<i class="bi bi-door-open"></i>Sair
+				</p>
+			</div>
+		</a>
+	</div>
+
+</div>

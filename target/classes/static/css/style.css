@@ -1,0 +1,405 @@
+@charset "utf-8";
+
+a {
+	font-weight: 600;
+}
+
+body {
+	padding-top: 0;
+	background-color: white
+}
+
+.bg-header {
+	background-color: white;
+}
+
+.form-control {
+	padding: 12px;
+}
+
+.form-control:focus {
+	border: 1px solid #1900ff;
+	color: #000000;
+}
+
+.form-select {
+	padding: 12px;
+}
+
+.form-select:focus {
+	border: 1px solid #1900ff;
+	color: #000000;
+}
+
+.bt-azul {
+	background-color: #475dd8;
+}
+
+.bt-azul:hover {
+	background-color: white;
+	color: #1900ff;
+	border: 1px solid #1900ff;
+}
+
+.bt-azul:focus {
+	background-color: #6582e4;
+}
+
+.bg-azul {
+	background-color: #475dd8 !important;
+}
+
+.bg-azul-claro {
+	background-color: #6582e4 !important;
+}
+
+.bg-azul-claro-transparente {
+	background-color: #BAC8F3 !important;
+}
+
+.text-azul {
+	color: #1848e4;
+}
+
+#parallaxBar {
+	background-image: url("../img/home.png");
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	padding-bottom: 20px;
+}
+
+.dropdown-item:focus {
+	background-color: #5073ff;
+	color: white !important;
+}
+
+.btn {
+	padding: 12px;
+}
+
+.input-form {
+	outline: none;
+	border: none;
+	border-radius: 4px;
+	background-color: #d8e3ff;
+}
+
+.pad-zero {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.card-produto {
+	background-position: center !important;
+	background-size: cover !important;
+	padding-top: 60px !important;
+	padding-bottom: 30px !important;
+	background-repeat: no-repeat;
+}
+
+.fonte-p {
+	font-size: 14px;
+}
+
+.fonte-pp {
+	font-size: 12px;
+}
+
+.card-body {
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 5px;
+	padding-bottom: 0;
+}
+
+.prod-destaque {
+	border: none
+}
+
+.carousel-control-next-icon {
+	background-image: url(../img/seta-direito.svg) !important;
+}
+
+.carousel-control-prev-icon {
+	background-image: url(../img/seta-esquerdo.svg) !important;
+}
+
+.aumentar-botao-caroussel {
+	height: 50px;
+	width: 50px;
+}
+
+.borda-clara {
+	border: 1px solid rgba(155, 155, 155, 0.72);
+}
+
+.borda-clara:hover {
+	border: 1px solid #00000000;
+	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+}
+
+.redondo {
+	border-radius: 40px;
+}
+
+.center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+}
+
+.redes-sociais li {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.redes-sociais li a {
+	color: #1848e4;
+}
+
+.redes-sociais li a:hover {
+	color: #1900ff;
+}
+
+.botao {
+	padding: 7px 10px;
+}
+
+.text-azul-branco-claro {
+	color: #d8e3ff;
+}
+
+.bg-azul-branco-claro {
+	background-color: #d8e3ff;
+}
+
+.text-azul-claro {
+	color: #6582e4;
+}
+
+.cadastro {
+	background-image: url(../img/cadastro.svg);
+	background-position: right;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+@media ( max-width : 350px) {
+	.cadastro {
+		background-image: url(../img/cadastro.svg);
+		background-position: right;
+		background-size: 40%;
+		background-repeat: no-repeat;
+	}
+}
+
+.entrar {
+	background-image: url(../img/entrar.svg);
+	background-position: right;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+@media ( max-width : 350px) {
+	.entrar {
+		background-image: url(../img/entrar.svg);
+		background-position: right;
+		background-size: 40%;
+		background-repeat: no-repeat;
+	}
+}
+
+.img-produto {
+	background-position: center;
+	background-size: cover;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.margin-fav {
+	background-color: rgba(255, 255, 255, 0.528);
+	padding: 4px;
+	border-radius: 30px;
+	color: blue;
+}
+
+.estado-uso {
+	border: 2px solid #5073ff;
+	color: #5073ff;
+	font-weight: 500;
+	padding: 5px 7px !important;
+}
+
+.promo {
+	padding: 3px 6px;
+	background-color: #475dd8;
+	color: white;
+	border-radius: 4px;
+}
+
+.reset-button {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: #00000000;
+	z-index: initial;
+}
+
+.capa {
+	padding: 160px 0;
+}
+
+.info-perfil {
+	margin-top: -160px;
+}
+
+.img-center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ativo {
+	border-bottom: 2px solid #5073ff;
+	color: #5073ff !important;
+}
+
+.aprovados {
+	background-image: url(../img/aprovado.svg);
+	background-position: right bottom;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.pendentes {
+	background-image: url(../img/pendente.svg);
+	background-position: right bottom;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.bem-vindo {
+	background-image: url(../img/bem-vindo.svg);
+	background-position: top 30% right;
+	background-size: 60%;
+	background-repeat: no-repeat;
+	transition-duration: 0.1s;
+}
+
+.bem-vindo2 {
+	background-image: url(../img/bem-vindo2.svg);
+	background-position: top 15% right;
+	background-size: 50%;
+	background-repeat: no-repeat;
+	transition-duration: .1s;
+}
+
+.tabela {
+	border-spacing: 10px;
+	border-collapse: separate;
+}
+
+.bg-table {
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.bloco {
+	padding-bottom: 80px;
+}
+
+.ativo2 {
+	background-color: #6582e4 !important;
+	color: white !important;
+	border-radius: 5px !important;
+}
+
+.imagem-anuncio {
+	border-style: dashed;
+	cursor: pointer;
+}
+
+.textarea-anuncio {
+	height: 180px;
+	resize: none;
+}
+
+.pad-anunciante-comentario {
+	padding-left: 100px;
+}
+
+.pad-cliente-comentario {
+	padding-right: 100px;
+}
+
+.inputfile {
+	/* visibility: hidden etc. wont work */
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile:focus+label {
+	/* keyboard navigation */
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile+label * {
+	pointer-events: none;
+}
+
+label.center {
+	cursor: pointer;
+}
+
+.vertical-align {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	/* Adicionar os prefixos dos navegadores */
+}
+
+.limite-texto {
+	max-width: 150px !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+}
+
+.mt-sair {
+	margin-top: 150px;
+}
+
+@media (min-width : 700px){
+	.img-card {
+		height: 150px !important;
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+}
+
+.img-card {
+	height: 200px;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+@media ( max-width : 767px) {
+	.img-produto {
+		object-fit: contain;
+		height: 250px !important;
+	}
+}
+
+.img-produto {
+	object-fit: contain;
+	height: 400px;
+}

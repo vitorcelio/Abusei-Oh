@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abusei, Oh! - Início</title>
+<link rel="shortcut icon" href="img/ico.png" type="image/x-icon">
+<link rel="stylesheet" href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap')
+	;
+
+.fonte-home {
+	font-family: 'Montserrat', sans-serif;
+	line-height: 1.3em;
+	font-size: 30px;
+}
+
+.palavra-dest {
+	background-color: white;
+	color: black;
+}
+
+</style>
+</head>
+
+<body>
+	<!--Menu principal-->
+	<header th:replace="~{base :: menu-principal}"></header>
+
+	<!--imagem principal com formulário-->
+	<section class="container-fluid bg-azul">
+		<div class="container pt-4">
+			<div class="row">
+				<div class="col-12 py-3">
+					<h1 class="text-white fonte-home text-center">
+						AQUI <span class="palavra-dest p-1">VOCÊ</span> ENCONTRA TUDO QUE <span class="palavra-dest p-1">PRECISA!</span>
+					</h1>
+				</div>
+				<div class="col-12">
+					<form class="rounded-2" th:action="@{/produtos/buscar}">
+						<input type="hidden" name="condicao" value="">
+						<input type="hidden" name="menorPreco" value="">
+						<input type="hidden" name="maiorPreco" value="">
+						<input type="hidden" name="subcategoria">
+					<div class="input-group">
+						<input type="text" name="nome" class="form-control py-3 fs-5" placeholder="Qual produto você está procurando?">
+						<button type="submit" class="input-group-text p-3 fs-4 bg-white"><ion-icon class="text-azul-claro" name="search-outline"></ion-icon></button>					
+					</div>
+					</form>
+				</div>
+			</div>
+			
+			<div class="d-none d-sm-block d-md-block">
+				<div class="row text-center py-4">
+				
+					<div class="col-4 col-sm-2 col-md-1">
+						<a th:href="@{/produtos}" class="text-decoration-none text-dark fs-3">
+							<p class="mb-0" style="height: 60px;"><ion-icon class="bg-white p-3 text-secondary redondo" name="apps-outline"></ion-icon></p>
+							<p class="fonte-pp text-white fw-light">Todas as categorias</p>
+						</a>
+					</div>
+					<!-- LOOP DE CATEGORIAS -->
+					<div th:each="categoria : ${categorias}" class="col-4 col-sm-2 col-md-1">
+						<a th:href="@{'/produtos/categoria/' + ${categoria.categoria}}" class="text-decoration-none text-dark fs-3">
+							<p class="mb-0" style="height: 60px;"><ion-icon class="bg-white p-3 text-secondary redondo" th:name="${categoria.icone}"></ion-icon></p>
+							<p class="fonte-pp text-white fw-light" th:text="${categoria.categoria}">Todas as categorias</p>
+						</a>
+					</div>
+					
+				</div>
+			</div>
+			<div class="row text-center py-4 flex-row flex-nowrap d-sm-none d-md-none" style="overflow: scroll;">
+			
+				<div class="col-3 col-sm-2 col-md-1">
+					<a th:href="@{/produtos}" class="text-decoration-none text-dark fs-3">
+						<p class="mb-0" style="height: 60px;"><ion-icon class="bg-white p-3 text-secondary redondo" name="apps-outline"></ion-icon></p>
+						<p class="fonte-pp text-white fw-light">Todas as categorias</p>
+					</a>
+				</div>
+				<!-- LOOP DE CATEGORIAS -->
+				<div th:each="categoria : ${categorias}" class="col-3 col-sm-2 col-md-1">
+					<a th:href="@{'/produtos/categoria/' + ${categoria.categoria}}" class="text-decoration-none text-dark fs-3">
+						<p class="mb-0" style="height: 60px;"><ion-icon class="bg-white p-3 text-secondary redondo" th:name="${categoria.icone}"></ion-icon></p>
+						<p class="fonte-pp text-white fw-light" th:text="${categoria.categoria}">Todas as categorias</p>
+					</a>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+
+	<main>
+
+		<!--Criar Conta-->
+		<section class="container">
+			<div class="row" sec:authorize="!isAuthenticated()">
+				<div class="col-md-6">
+					<div class="mt-4 p-3 rounded-3 bg-azul-claro cadastro">
+						<div class="col-8 col-md-6">
+							<h4 class="text-white">Crie sua conta e publique seus anúncios</h4>
+							<p class="fw-normal text-azul-branco-claro">Alcance mais pessoas compartilhando seus produtos.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="mt-4 p-3 rounded-3 bg-azul-branco-claro entrar">
+						<div class="col-8 col-md-6">
+							<h4 class="text-dark">Entre na sua conta e gerencie seus anúncios</h4>
+							<p class="fw-normal text-azul-claro">Acompanhe as situações dos seus anúncios e o relatório de acesso.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!--Anúncios-->
+		<section class="mt-4">
+			<div class="container">
+				<h2 th:if="${elementos > 0}" class="text-dark">Anúncios recentes</h2>
+				<div class="row mt-3">
+
+					<div th:each="produto : ${produtos}" class="col-6 col-sm-4 col-md-2 mt-3">
+						<a th:href="@{'/produtos/' + ${produto.link}}" class="text-decoration-none text-dark">
+							<div class="card mb-3 border-0">
+								<div th:if="${produto.imagem != null}" class="img-card bg-azul-branco-claro rounded-2" th:style="'background-image: url(' + ${produto.imagem} + ')'"></div>
+								<div th:if="${produto.imagem == null}" class="img-card bg-azul-branco-claro rounded-2" style="background-image: url('/img/sem-imagem.png')"></div>
+								<div class="card-body">
+									<h6 class="card-title" th:text="${produto.nome}">Carro chevrolet onix 2021</h6>
+									<h5 class="card-title text-azul limite-texto" th:text="@{'R$ ' + ${#numbers.formatDecimal(produto.precoVista,3,'POINT',2,'COMMA')}}">R$ 1000</h5>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer th:replace="~{base :: footer}"></footer>
+
+	<script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
