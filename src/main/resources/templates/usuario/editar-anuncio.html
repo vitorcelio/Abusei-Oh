@@ -111,21 +111,19 @@
                             <div class="col-md-6 mt-2">
                                 <label class="fw-bold" for="">Clique e escolha suas imagens</label>
                                     <div class="form-control imagem-anuncio border-2" th:classappend="${erro == true} ? 'border-danger'">
-                                        <input accept="image/*" th:disabled="${imagens.size == 4}" th:name="file" type="file" id="capa" class="inputfile"/>
+                                        <input accept="image/*" th:disabled="${imagens.size == 4}" th:name="files" multiple="multiple" type="file" id="capa" class="inputfile"/>
                                         <label for="capa" class="center" style="outline: none;">
-                                        <img th:if="${produto.imagem == null}" src="/img/imagem.svg" height="150" alt="" >
-                                        <img th:if="${produto.imagem != null}" th:src="${produto.imagem}" height="150" alt="" >
-                                            <!-- <img th:if="${imagens.size == null}" src="/img/imagem.svg" height="150" alt="" >
-                                            <img th:if="${imagens.size == 4}" src="/img/imagem2.svg" height="150" alt="" > -->
+                                            <img th:if="${imagens.size < 4}" src="/img/imagem.svg" height="150" alt="" >
+                                            <img th:if="${imagens.size == 4}" src="/img/imagem2.svg" height="150" alt="" >
                                         </label>
                                         <small class="center fonte-pp text-secondary">8MB é o limite máximo para suas imagens</small>
                                     </div>
-                                    <!-- <div th:if="${erro == true}" class="text-danger mt-1 fonte-p">
+                                    <div th:if="${erro == true}" class="text-danger mt-1 fonte-p">
                                     	Suas imagens ultrapassaram o limite!
                                     </div>
                                     <div th:if="${imagens.size == 4}" class="text-danger mt-1 fonte-p">
                                     	Seu anúncio atingiu o número máximo de imagens (4)!
-                                    </div> -->
+                                    </div>
                             </div>
 
                             <div class="col-md-6 mt-2">
@@ -139,7 +137,7 @@
                         <button th:if="${contatovazio == null}" class="mt-3 text-white fw-bold btn botao bg-azul-claro">Publicar</button>
                         
                     </form>
-	                  	<!-- <div class="row mt-2">
+	                  	<div class="row mt-2">
 	                   
 	                    <div th:each="imagem : ${imagens}" class="col-6 col-sm-3">
 	                   		<form th:action="@{/dashboard/deletarImagem}" method="post">
@@ -148,8 +146,9 @@
 	                   			<button class="btn-close" aria-label="Close"></button>
 	                   		</form>
 	                   		
-	                   		 <img class="col-12" th:alt="${imagem.produto.nome}" th:src="${imagem.urlImagem}"> 
-	                   	</div>-->
+	                   		 <img class="col-12" th:alt="${imagem.produto.nome}" th:src="@{'/imagem/mostrarProdutos/' + ${imagem.id}}"> 
+	                   	</div>
+	                   	
 	                   </div>
 
                 </div>

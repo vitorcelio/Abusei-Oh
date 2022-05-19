@@ -20,7 +20,7 @@
 		<section th:if="${(perfil.fotoCapa == null) or (#strings.isEmpty(perfil.fotoCapa))}"
 			style="background-image: linear-gradient(to right, rgba(0, 0, 0, 0.500), rgba(0, 0, 0, 0.500)), url(/img/capa-sem-foto.png); background-position: center; background-size: cover;" class="capa"></section>
 		<section th:if="${(perfil.fotoCapa != null) or (!#strings.isEmpty(perfil.fotoCapa))}"
-			th:style="'background-image: linear-gradient(to right, rgba(0, 0, 0, 0.500), rgba(0, 0, 0, 0.500)), url('+ ${perfil.fotoCapa} + '); background-position: center; background-size: cover;'"
+			th:style="'background-image: linear-gradient(to right, rgba(0, 0, 0, 0.500), rgba(0, 0, 0, 0.500)), url(/imagem/mostrarCapa/'+ ${perfil.username} + '); background-position: center; background-size: cover;'"
 			class="capa"></section>
 		<section class="container-fluid">
 			<div class="row">
@@ -30,7 +30,7 @@
 				<div class="bg-white col-10 col-md-3 info-perfil rounded pb-3 mb-5 shadow">
 					<div class="text-center mt-4">
 						<img th:if="${(perfil.fotoPerfil == null) or (#strings.isEmpty(perfil.fotoPerfil))}" src="/img/perfil-sem-foto.png" alt="" width="120" height="120" class="rounded-circle"> <img
-							th:if="${not #strings.isEmpty(perfil.fotoPerfil)}" th:src="${perfil.fotoPerfil}" width="120" height="120" style="object-fit: cover;" class="rounded-circle bg-azul-branco-claro">
+							th:if="${not #strings.isEmpty(perfil.fotoPerfil)}" th:src="@{'/imagem/mostrarPerfil/' + ${perfil.username}}" width="120" height="120" style="object-fit: cover;" class="rounded-circle bg-azul-branco-claro">
 						<h4 class="mt-1">
 							<span th:text="${perfil.nome}">Vítor</span> <span th:text="${perfil.sobrenome}">Célio</span>
 						</h4>

@@ -38,9 +38,9 @@ public class RequisicaoEditarAnuncio {
 	@NotBlank(message = "Seu produto precisa de uma localização!")
 	private String cidade;
 	
-//	private MultipartFile[] files;
+	private MultipartFile[] files;
 	
-	private MultipartFile file;
+//	private MultipartFile file;
 	
 	public Long getIdProduto() {
 		return idProduto;
@@ -102,23 +102,24 @@ public class RequisicaoEditarAnuncio {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-//	public MultipartFile[] getFiles() {
-//		return files;
-//	}
-//	public void setFiles(MultipartFile[] file) {
-//		this.files = file;
-//	}
+
+	public MultipartFile[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(MultipartFile[] file) {
+		this.files = file;
+	}	
 	
-	
+//	public MultipartFile getFile() {
+//		return file;
+//	}
+//	public void setFile(MultipartFile file) {
+//		this.file = file;
+//	}
 	
 	public String getCidade() {
 		return cidade;
-	}
-	public MultipartFile getFile() {
-		return file;
-	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
 	}
 	public void setCidade(String cidade) {
 		this.cidade = cidade;

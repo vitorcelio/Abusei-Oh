@@ -15,6 +15,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -26,46 +27,47 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	private User user;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Condicao condicao;
-	
+
 	private String nome;
 	private BigDecimal precoVista;
 	private BigDecimal precoCortado;
 	private BigDecimal precoCartao;
 	private Integer parcelasCartao;
-	
+
 	@ManyToOne
 	private Subcategoria subcategoria;
-	
+
 	@ManyToOne
 	private Cidade cidade;
-	
+
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
 	private List<Imagem> imagens = new ArrayList<>();
-	
+
 	private String descricao;
-	
+
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
 	private List<Comentario> comentarios;
-	
+
 	@Enumerated(EnumType.STRING)
 	private StatusProduto status;
-	
+
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
 	private List<Favorito> favoritos;
-	
+
 	@Column(nullable = false, unique = true)
 	private String link;
-	
+
 	private LocalDateTime data;
-	
-	private String imagem;
-	
+
+	@Lob
+	private byte[] imagem;
+
 	@Transient
 	private Set<String> numeros = new TreeSet<>();
 
@@ -213,15 +215,12 @@ public class Produto {
 		this.numeros = numeros;
 	}
 
-	public String getImagem() {
+	public byte[] getImagem() {
 		return imagem;
 	}
 
-	public void setImagem(String imagem) {
+	public void setImagem(byte[] imagem) {
 		this.imagem = imagem;
 	}
-	
-	
-	
-	
+
 }

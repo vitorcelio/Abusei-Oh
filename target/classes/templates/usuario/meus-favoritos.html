@@ -32,7 +32,7 @@
                         <div th:each="favorito : ${favoritos}" class="col-6 col-sm-4 col-md-2 mt-3">
                         	<a th:href="@{'/produtos/'+${favorito.produto.link}}" class="text-decoration-none text-dark">
 	                            <div class="card mb-3 border-0">
-	                                <div th:if="${favorito.produto.imagem != null}" class="img-card bg-azul-branco-claro rounded-2" th:style="'background-image: url(' + ${favorito.produto.imagem} + ')'"></div>
+	                                <div th:if="${favorito.produto.imagem != null}" class="img-card bg-azul-branco-claro rounded-2" th:style="'background-image: url(/imagem/mostrarProduto/' + ${favorito.produto.id} + ')'"></div>
 	                            <div th:if="${favorito.produto.imagem == null}" class="img-card bg-azul-branco-claro rounded-2" style="background-image: url('/img/sem-imagem.png')"></div>
 	                                <div class="card-img-overlay">
 	                                    <form action="/dashboard/favoritar" method="post">

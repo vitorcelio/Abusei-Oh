@@ -20,7 +20,7 @@
 					</li>
 					<li sec:authorize="isAuthenticated()" class="text-azul nav dropdown justify-content-center align-items-center dropdown-toggle"><img
 						th:if="${(perfil?.fotoPerfil == null) or (#strings.isEmpty(perfil?.fotoPerfil))}" src="/img/perfil-sem-foto.png" width="32" height="32" class="rounded-circle mx-2"> <img
-						th:if="${(perfil?.fotoPerfil != null)}" th:src="${perfil?.fotoPerfil}" width="32" height="32" class="rounded-circle mx-2" style="object-fit: cover;"> <a href="#" id="dropdownUser1"
+						th:if="${(perfil?.fotoPerfil != null)}" th:src="@{'/imagem/mostrarPerfil/' + ${perfil.username}}" width="32" height="32" class="rounded-circle mx-2" style="object-fit: cover;"> <a href="#" id="dropdownUser1"
 						data-bs-toggle="dropdown" aria-expanded="false" class="text-decoration-none text-azul fs-6" th:text="${perfil?.nome}"> </a>
 
 						<ul class="dropdown-menu mx-0 shadow" style="width: 220px;">
@@ -62,7 +62,7 @@
 				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
 					<li sec:authorize="isAuthenticated()" class="text-azul nav dropdown justify-content-center align-items-center dropdown-toggle"><a href="#" id="dropdownUser1" data-bs-toggle="dropdown"
 						aria-expanded="false" class="text-decoration-none text-azul"> <img th:if="${(perfil?.fotoPerfil == null) or (#strings.isEmpty(perfil?.fotoPerfil))}" src="/img/perfil-sem-foto.png" width="32"
-							height="32" class="rounded-circle mx-2"> <img th:if="${(perfil?.fotoPerfil != null)}" th:src="${perfil?.fotoPerfil}" width="32" height="32" class="rounded-circle mx-2"
+							height="32" class="rounded-circle mx-2"> <img th:if="${(perfil?.fotoPerfil != null)}" th:src="@{/imagem/mostarPerfil/ + ${perfil.id}}" width="32" height="32" class="rounded-circle mx-2"
 							style="object-fit: cover;">
 					</a>
 

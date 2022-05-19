@@ -1,11 +1,7 @@
 package br.com.abusei.Abusei.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 
@@ -97,9 +93,6 @@ public class UserController {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
-	private static String URL_PERFIL = "src/main/resources/static/uploads/img-perfil";
-	private static String URL_CAPA = "src/main/resources/static/uploads/img-capa";
-	private static String URL_PRODUTOS = "src/main/resources/static/uploads/img-produtos";
 	
 	@GetMapping("produtos")
 	public String mostrarProdutos(@RequestParam(defaultValue = "1") int page,Model model, String pagina, Principal p) {
@@ -240,7 +233,7 @@ public class UserController {
 	}
 
 	@PostMapping("cadastrar-anuncio")
-	public String cadastrarAnuncio(@Valid RequisicaoCadastrarAnuncio requisicao, BindingResult result, Model model) {
+	public String cadastrarAnuncio(@Valid RequisicaoCadastrarAnuncio requisicao, BindingResult result, Model model) throws IOException {
 		
 		User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("perfil", user);
@@ -251,10 +244,10 @@ public class UserController {
 		List<Estado> estados = estadoRepository.findAll();
 		model.addAttribute("estados", estados);
 		
-		long soma = requisicao.getFile().getSize();
-//		for (MultipartFile file : requisicao.getFiles()) {
-//			soma += file.getSize();
-//		}
+		long soma = 0;
+		for (MultipartFile file : requisicao.getFiles()) {
+			soma += file.getSize();
+		}
 		
 		if(result.hasErrors()) {
 			if(soma > 8388608) model.addAttribute("erro", true);
@@ -275,50 +268,30 @@ public class UserController {
 		Cidade cidade = cidadeRepository.findByCidade(requisicao.getCidade());
 		produto.setCidade(cidade);
 		
-//		produtoRepository.save(produto);
+		produtoRepository.save(produto);
 		
-//		if(requisicao.getFiles().length > 0) {
 			
+		if(requisicao.getFiles().length > 0) {
 			try {
-				byte[] bytes = requisicao.getFile().getBytes();
-				Path caminho = Paths.get(URL_PRODUTOS + File.separator +  requisicao.getLinkAleatorio() + requisicao.getFile().getOriginalFilename());
-				System.out.println(caminho.toAbsolutePath());
-				Files.write(caminho, bytes);
-				produto.setImagem("/imagem/mostrarProdutos/" + requisicao.getLinkAleatorio() + requisicao.getFile().getOriginalFilename());
 				
-//				LOCAL
-//				int i = 0;
-//				
-//				for(MultipartFile file : requisicao.getFiles()) {
-//					
-//					System.out.println(file.getSize());
-//					
-//					if(file.getSize() > 0) {
-//						i++;
-//						byte[] bytes = file.getBytes();
-//						Path caminho = Paths.get(URL_PRODUTOS + File.separator +  requisicao.getLinkAleatorio() + file.getOriginalFilename());
-//						System.out.println(caminho.toAbsolutePath());
-//						Files.write(caminho, bytes);
-//						
-//						Imagem imagem = new Imagem();
-//						imagem.setUrlImagem("/imagem/mostrarProdutos/" +  requisicao.getLinkAleatorio() + file.getOriginalFilename());
-//						imagem.setProduto(produto);
-//						imagemRepository.save(imagem);
-//						
-//						if (i == 1) {
-//							produto.setImagem("/imagem/mostrarProdutos/" + requisicao.getLinkAleatorio() + file.getOriginalFilename());
-//							produtoRepository.save(produto);
-//						}
-//					}
-//				}
+				for(MultipartFile file : requisicao.getFiles()) {
+					
+					
+					if(file.getSize() > 0) {
+						byte[] bytes = file.getBytes();
+						Imagem imagem = new Imagem(bytes);
+						imagem.setProduto(produto);
+						imagemRepository.save(imagem);
+					}
+				}
 				
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//		} 
-		produtoRepository.save(produto);
+		}
+		
 		return "redirect:/dashboard/produtos";
 	}
 	
@@ -361,17 +334,17 @@ public class UserController {
 		Produto produto = produtoRepository.findId(requisicao.getIdProduto());
 		model.addAttribute("produto", produto);
 		
-//		List<Imagem> imagens = imagemRepository.findByProduto(produto);
-//		model.addAttribute("imagens", imagens);
+		List<Imagem> imagens = imagemRepository.findByProduto(produto);
+		model.addAttribute("imagens", imagens);
 		
 		List<Estado> estados = estadoRepository.findAll();
 		model.addAttribute("estados", estados);
 		
 		
-		long soma = requisicao.getFile().getSize();
-//		for (MultipartFile file : requisicao.getFiles()) {
-//			soma += file.getSize();
-//		}
+		long soma = 0;
+		for (MultipartFile file : requisicao.getFiles()) {
+			soma += file.getSize();
+		}
 		
 		if(result.hasErrors()) {
 			if(soma > 8388608) model.addAttribute("erro", true);
@@ -412,45 +385,37 @@ public class UserController {
 		Cidade cidade = cidadeRepository.findByCidade(requisicao.getCidade());
 		produto.setCidade(cidade);
 		
-//		produtoRepository.save(produto);
 		
-//		if(requisicao.getFiles().length > 0) {
+		if(requisicao.getFiles().length > 0) {
 			
 			try {
-				byte[] bytes = requisicao.getFile().getBytes();
-				Path caminho = Paths.get(URL_PRODUTOS + File.separator + produto.getImagem().replace("/imagem/mostrarProdutos/", ""));
-				Files.write(caminho, bytes);
-				produto.setImagem("/imagem/mostrarProdutos/" + produto.getImagem().replace("/imagem/mostrarProdutos/", ""));
-//				int i = 0;
-//				
-////				for(MultipartFile file : requisicao.getFiles()) {
-//					
-////					System.out.println(file.getSize());
-//					
-//					if(file.getSize() > 0) {
-//						i++;
-//						byte[] bytes = file.getBytes();
-//						Path caminho = Paths.get(URL_PRODUTOS + File.separator + produto.getLink() + file.getOriginalFilename());
-//						Files.write(caminho, bytes);
-//						
-//						Imagem imagem = new Imagem();
-//						imagem.setUrlImagem("/imagem/mostrarProdutos/" +  produto.getLink() + file.getOriginalFilename());
-//						imagem.setProduto(produto);
-//						imagemRepository.save(imagem);
-//						
-//						if (i == 1 && (produto.getImagem() == null)) {
-//							produto.setImagem("/imagem/mostrarProdutos/" + produto.getLink() + file.getOriginalFilename());
-//							produtoRepository.save(produto);
-//						}
-//					}
-//				}
+				int i = 0;
+				
+				for(MultipartFile file : requisicao.getFiles()) {
+					
+					
+					if(file.getSize() > 0) {
+						i++;
+						byte[] bytes = file.getBytes();
+						Imagem imagem = new Imagem(bytes);
+						imagem.setProduto(produto);
+						imagemRepository.save(imagem);
+//						imagemList.add(imagem);
+						
+						if (i == 1 && (produto.getImagem() == null)) {
+							produto.setImagem(bytes);
+						}
+					}
+				}
 				
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//		} 
+		} 
+		
+//		produto.setImagens(imagemList);
 		produtoRepository.save(produto);
 		return "redirect:/dashboard/editar-anuncio/" + produto.getLink();
 	}
@@ -459,15 +424,6 @@ public class UserController {
 	@PostMapping("deletarAnuncio")
 	public String deletarAnuncio(@RequestParam("id") Long id) {
 		Produto produto = produtoRepository.findId(id);
-		
-		String nomeImagemProduto = produto.getImagem().replace("/imagem/mostrarProdutos/", "");
-		Path diretorioPath = Paths.get(URL_PRODUTOS + File.separator + nomeImagemProduto);
-		
-		try {
-			Files.deleteIfExists(diretorioPath);
-		} catch (IOException e) {
-			throw new RuntimeException("Problemas na tentativa de deletar arquivo.", e);
-		}
 		
 		produtoRepository.delete(produto);
 		return "redirect:/dashboard/produtos";
@@ -642,10 +598,7 @@ public class UserController {
 			try {
 				
 				byte[] bytes = file.getBytes();
-				Path caminho = Paths.get(URL_PERFIL + File.separator + principal.getName() +".png");
-				System.out.println(caminho.toAbsolutePath());
-				Files.write(caminho, bytes);
-				user.setFotoPerfil("/imagem/mostrarPerfil/"+ principal.getName() +".png");
+				user.setFotoPerfil(bytes);
 				userRepository.save(user);
 				
 			} catch (IOException e) {
@@ -671,9 +624,7 @@ public class UserController {
 			try {
 				
 				byte[] bytes = file.getBytes();
-				Path caminho = Paths.get(URL_CAPA + File.separator + principal.getName() +".png");
-				Files.write(caminho, bytes);
-				user.setFotoCapa("/imagem/mostrarCapa/"+ principal.getName() +".png");
+				user.setFotoCapa(bytes);
 				userRepository.save(user);
 				
 			} catch (IOException e) {
@@ -696,7 +647,7 @@ public class UserController {
 			int i = 0;
 			for(Imagem img : produto.getImagens()){
 				if(i == 0) {
-					produto.setImagem(img.getUrlImagem());
+					produto.setImagem(img.getImagem());
 				}
 				
 				i++;

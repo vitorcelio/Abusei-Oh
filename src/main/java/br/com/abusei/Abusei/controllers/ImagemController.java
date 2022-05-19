@@ -1,8 +1,5 @@
 package br.com.abusei.Abusei.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.abusei.Abusei.models.Imagem;
+import br.com.abusei.Abusei.models.Produto;
 import br.com.abusei.Abusei.models.User;
+import br.com.abusei.Abusei.repositorys.ImagemRepository;
+import br.com.abusei.Abusei.repositorys.ProdutoRepository;
 import br.com.abusei.Abusei.repositorys.UserRepository;
 
 @Controller
@@ -20,19 +21,36 @@ import br.com.abusei.Abusei.repositorys.UserRepository;
 public class ImagemController {
 
 	@Autowired
+	private ImagemRepository imagemRepository;
+	
+	@Autowired
 	private UserRepository userRepository;
 	
-	private static String URL_PERFIL = "src/main/resources/static/uploads/img-perfil";
-	private static String URL_CAPA = "src/main/resources/static/uploads/img-capa";
-	private static String URL_PRODUTOS = "src/main/resources/static/uploads/img-produtos";
+	@Autowired
+	private ProdutoRepository produtoRepository;
 	
-	@GetMapping("mostrarPerfil/{imagem}")
+	@GetMapping("mostrarProduto/{idProduto}")
 	@ResponseBody
-	public byte[] visualizarPerfil(@PathVariable("imagem") String imagem) {
-		File imagemArquivo = new File(URL_PERFIL + File.separator + imagem);
+	public byte[] visualizarProduto(@PathVariable("idProduto") Long id) {
+		Produto produto = produtoRepository.findById(id).get();
+		
 		try {
-			return Files.readAllBytes(imagemArquivo.toPath());
-		} catch (IOException e) {
+			return produto.getImagem();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@GetMapping("mostrarPerfil/{username}")
+	@ResponseBody
+	public byte[] visualizarPerfil(@PathVariable("username") String username) {
+		User user = userRepository.findByUsername(username);
+		
+		try {
+			return user.getFotoPerfil();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -49,13 +67,14 @@ public class ImagemController {
 		return "redirect:/dashboard/configuracoes";
 	}
 	
-	@GetMapping("mostrarCapa/{imagem}")
+	@GetMapping("mostrarCapa/{username}")
 	@ResponseBody
-	public byte[] visualizarCapa(@PathVariable("imagem") String imagem) {
-		File imagemArquivo = new File(URL_CAPA + File.separator + imagem);
+	public byte[] visualizarCapa(@PathVariable("username") String username) {
+		User user = userRepository.findByUsername(username);
+		
 		try {
-			return Files.readAllBytes(imagemArquivo.toPath());
-		} catch (IOException e) {
+			return user.getFotoCapa();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -72,12 +91,14 @@ public class ImagemController {
 		return "redirect:/dashboard/configuracoes";
 	}
 	
-	@GetMapping("mostrarProdutos/{imagem}")
-	public @ResponseBody byte[] visualizarProdutos(@PathVariable("imagem") String imagem) {
-		File imagemArquivo = new File(URL_PRODUTOS + File.separator + imagem);
+	@GetMapping("mostrarProdutos/{id}")
+	@ResponseBody
+	public  byte[] visualizarProdutos(@PathVariable("id") Long id) {
+		Imagem imagem = imagemRepository.findById(id).get();
+		
 		try {
-			return Files.readAllBytes(imagemArquivo.toPath());
-		} catch (IOException e) {
+			return imagem.getImagem();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

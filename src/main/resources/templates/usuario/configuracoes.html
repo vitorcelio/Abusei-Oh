@@ -111,9 +111,14 @@
 												<label class="fw-bold" for="">Foto de perfil - Clique ou arraste a imagem pra cá</label>
 
 												<div class="form-control imagem-anuncio border-2" th:classappend="${erroPerfil == true} ? 'border-danger'">
-													<input accept="image/*" type="file" name="file" id="perfil" class="inputfile" /> <label for="perfil" class="center" style="outline: none;"> <img th:if="${perfil?.fotoPerfil == null}"
-														src="/img/imagem-perfil.svg" height="150" alt=""> <img th:if="${perfil?.fotoPerfil != null}" th:src="${perfil?.fotoPerfil}" height="150" alt="">
-													</label> <small class="center fonte-pp text-secondary">3MB é o limite máximo para seu perfil</small> <input type="submit" value="Salvar perfil" class="text-white fw-bold btn botao bg-azul-claro" />
+													<input accept="image/*" type="file" name="file" id="perfil" class="inputfile" /> 
+													<label for="perfil" class="center" style="outline: none;"> 
+														<img th:if="${perfil?.fotoPerfil == null}"
+														src="/img/imagem-perfil.svg" height="150" alt=""> 
+														<img th:if="${perfil?.fotoPerfil != null}" th:src="@{'/imagem/mostrarPerfil/' + ${perfil.username}}" height="150" alt="">
+													</label> 
+													<small class="center fonte-pp text-secondary">3MB é o limite máximo para seu perfil</small> 
+													<input type="submit" value="Salvar perfil" class="text-white fw-bold btn botao bg-azul-claro" />
 													<a href="/imagem/removerPerfil" class="border text-azul-claro fw-bold btn botao bg-azul-branco-claro">Remover Perfil</a>
 												</div>
 												<div th:if="${erroPerfil == true}" class="text-danger mt-1 fonte-p">Sua imagem ultrapassou o limite!</div>
@@ -126,9 +131,13 @@
 												<label class="fw-bold" for="">Foto de Capa - Clique ou arraste a imagem pra cá</label>
 
 												<div class="form-control imagem-anuncio border-2" th:classappend="${erroCapa == true} ? 'border-danger'">
-													<input accept="image/*" type="file" name="file" id="capa" class="inputfile" /> <label for="capa" class="center" style="outline: none;"> <img th:if="${perfil?.fotoCapa == null}"
-														src="/img/imagem-capa.svg" height="150" alt=""> <img th:if="${perfil?.fotoCapa != null}" th:src="${perfil?.fotoCapa}" height="150" alt="">
-													</label> <small class="center fonte-pp text-secondary">3MB é o limite máximo para sua capa</small> <input type="submit" value="Salvar capa" class="text-white fw-bold btn botao bg-azul-claro" />
+													<input accept="image/*" type="file" name="file" id="capa" class="inputfile" /> 
+													<label for="capa" class="center" style="outline: none;"> 
+														<img th:if="${perfil?.fotoCapa == null}"
+														src="/img/imagem-capa.svg" height="150" alt=""> 
+														<img th:if="${perfil?.fotoCapa != null}" th:src="@{'/imagem/mostrarCapa/' + ${perfil.username}}" height="150" alt="">
+													</label> 
+													<small class="center fonte-pp text-secondary">3MB é o limite máximo para sua capa</small> <input type="submit" value="Salvar capa" class="text-white fw-bold btn botao bg-azul-claro" />
 													<a href="/imagem/removerCapa" class="border text-azul-claro fw-bold btn botao bg-azul-branco-claro">Remover Capa</a>
 												</div>
 												<div th:if="${erroCapa == true}" class="text-danger mt-1 fonte-p">Sua imagem ultrapassou o limite!</div>

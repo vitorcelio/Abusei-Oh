@@ -110,7 +110,7 @@
                             <div class="col-md-6 mt-2">
                                 <label class="fw-bold" for="">Clique e escolha suas imagens</label>
                                     <div class="form-control imagem-anuncio border-2" th:classappend="${erro == true} ? 'border-danger'">
-                                        <input  accept="image/*" th:field="*{file}" type="file" id="capa" class="inputfile"/>
+                                        <input  accept="image/*" th:field="*{files}" multiple="multiple" type="file" id="capa" class="inputfile"/>
                                         <label for="capa" class="center" style="outline: none;">
                                             <img src="/img/imagem.svg" height="150" alt="">
                                         </label>

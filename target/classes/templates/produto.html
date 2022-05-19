@@ -25,19 +25,15 @@
 
 						<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 							<div class="carousel-inner">
-								<div class="carousel-item active">
-									<img th:if="${produto.imagem != null}" th:src="${produto?.imagem}" class="bg-azul-branco-claro w-100 img-produto" alt="..."> <img th:if="${produto.imagem == null}"
-										src="/img/sem-imagem.png" class="bg-azul-branco-claro w-100 img-produto" alt="...">
-								</div>
-								<!-- <div th:if="${produto.imagem != null}" th:each="imagem : ${produto.imagens}" class="carousel-item" th:classappend="${imagem.urlImagem} == ${produto.imagem} ? 'active'">
-                                    <img th:src="${imagem.urlImagem}" class="bg-azul-branco-claro w-100 img-produto" alt="...">
+								<div th:if="${produto.imagem != null}" th:each="imagem : ${imagens}" class="carousel-item" th:classappend="${imagem.id} == ${idImagemPrincipal} ? 'active'">
+                                    <img th:src="@{'/imagem/mostrarProdutos/' + ${imagem.id}}" class="bg-azul-branco-claro w-100 img-produto" alt="...">
                                 </div>
                                 <div th:if="${produto.imagem ==  null}">
                                 	<img src="/img/sem-imagem.png" class="bg-azul-branco-claro w-100 img-produto" alt="...">
-                                </div> -->
+                                </div> 
 							</div>
 
-							<!-- <button th:if="${produto.imagem != null and produto.imagens.size > 1}" class="carousel-control-prev" type="button"
+							<button th:if="${produto.imagem != null and produto.imagens.size > 1}" class="carousel-control-prev" type="button"
                                 data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon aumentar-botao-caroussel"
                                     aria-hidden="true"></span>
@@ -48,7 +44,7 @@
                                 <span class="carousel-control-next-icon aumentar-botao-caroussel"
                                     aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
-                            </button> -->
+                            </button>
 						</div>
 					</div>
                     <div class="col-md-5">
@@ -102,20 +98,20 @@
 				</div>
 
                 <h6 class="mt-3">Vendido por: </h6>
-                <div th:style="'background-image: linear-gradient(to right, rgba(0, 0, 0, 0.500), rgba(0, 0, 0, 0.500)), url('+${user.fotoCapa}+'); background-position: center; background-size: cover;'"
+                <a th:href="@{'/@' + ${user.username}}" class="text-white text-decoration-none">
+                <div th:style="'background-image: linear-gradient(to right, rgba(0, 0, 0, 0.500), rgba(0, 0, 0, 0.500)), url(/imagem/mostrarCapa/'+${user.username}+'); background-position: center; background-size: cover;'"
                     class="rounded justify-content-between d-flex p-2">
 
                     <div class="navbar">
-                        <img th:src="${user.fotoPerfil}" width="50px" height="50px" alt="vit"
+                        <img th:src="@{'/imagem/mostrarPerfil/' + ${user.username}}" width="50px" height="50px" alt="vit"
                             class="rounded-circle">
                         <h6 class="ms-2 text-white"> <span th:text="${user.nome}">Vitor</span> <span th:text="${user.sobrenome}">Celio</span></h6>
                     </div>
                     <div class="navbar fs-2">
-                        <a th:href="@{'/@' + ${user.username}}" class="text-white">
                             <ion-icon name="person-circle-outline"></ion-icon>
-                        </a>
                     </div>
                 </div>
+               </a>
             </div>
         </section>
 

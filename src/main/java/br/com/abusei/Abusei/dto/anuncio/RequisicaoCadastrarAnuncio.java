@@ -1,5 +1,6 @@
 package br.com.abusei.Abusei.dto.anuncio;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -45,10 +46,10 @@ public class RequisicaoCadastrarAnuncio {
 	private String cidade;
 
 //	LOCAL
-//	private MultipartFile[] files;
+	private MultipartFile[] files;
 	
 //	PRODUÇÃO
-	private MultipartFile file;
+//	private MultipartFile file;
 	
 	
 	private String linkAleatorio = UUID.randomUUID().toString().replace("-", "");
@@ -125,27 +126,26 @@ public class RequisicaoCadastrarAnuncio {
 		this.descricao = descricao;
 	}
 
-//	public MultipartFile[] getFiles() {
-//		return files;
-//	}
-//
-//	public void setFiles(MultipartFile[] file) {
-//		this.files = file;
-//	}
-	
+	public MultipartFile[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(MultipartFile[] file) {
+		this.files = file;
+	}
 	
 
+//	public MultipartFile getFile() {
+//		return file;
+//	}
+//	
+//	public void setFile(MultipartFile file) {
+//		this.file = file;
+//	}
 	public String getCidade() {
 		return cidade;
 	}
 
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
@@ -159,7 +159,7 @@ public class RequisicaoCadastrarAnuncio {
 		this.linkAleatorio = linkAleatorio;
 	}
 
-	public Produto toProduto() {
+	public Produto toProduto() throws IOException {
 
 		BigDecimal b1 = null;
 		if (precoCortado != null && !precoCortado.isEmpty()) {
@@ -182,6 +182,12 @@ public class RequisicaoCadastrarAnuncio {
 		produto.setDescricao(descricao);
 		produto.setPrecoVista(new BigDecimal(precoVista));
 		produto.setParcelasCartao(1);
+		
+		if(files.length > 0) {
+			produto.setImagem(files[0].getBytes());
+		} else {
+			produto.setImagem(null);
+		}
 
 		if (b1 != null) {
 			if (b1.compareTo(b2) == 1) {

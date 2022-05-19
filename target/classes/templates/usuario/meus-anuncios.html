@@ -39,8 +39,8 @@
                         <div th:each="produto : ${produtos}" class="col-6 col-sm-4 col-md-2 mt-3">
 
                             <div class="card mb-3 border-0">
-                                <div th:if="${produto.imagem != null}" class="img-card bg-azul-branco-claro rounded-2" th:style="'background-image: url(' + ${produto.imagem} + ')'"></div>
-	                            <div th:if="${produto.imagem == null}" class="img-card bg-azul-branco-claro rounded-2" style="background-image: url('/img/sem-imagem.png')"></div>
+                                <div th:if="${produto.imagem != null}" class="img-card bg-azul-branco-claro rounded-2" th:style="'background-image: url(/imagem/mostrarProduto/' + ${produto.id} + ')'"></div>
+	                            <div th:if="${produto.imagem == null}" class="img-card bg-azul-branco-claro rounded-2" style="background-image: url(/img/sem-imagem.png)"></div>
                                 <div class="card-img-overlay">
                                     <div class="dropdown">
                                         <a class="margin-fav" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown"

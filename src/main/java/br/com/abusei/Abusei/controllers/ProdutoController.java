@@ -1,6 +1,7 @@
 package br.com.abusei.Abusei.controllers;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import br.com.abusei.Abusei.models.Comentario;
 import br.com.abusei.Abusei.models.Condicao;
 import br.com.abusei.Abusei.models.Estado;
 import br.com.abusei.Abusei.models.Favorito;
+import br.com.abusei.Abusei.models.Imagem;
 import br.com.abusei.Abusei.models.Produto;
 import br.com.abusei.Abusei.models.StatusProduto;
 import br.com.abusei.Abusei.models.User;
@@ -30,6 +32,7 @@ import br.com.abusei.Abusei.repositorys.CategoriaRepository;
 import br.com.abusei.Abusei.repositorys.ComentarioRepository;
 import br.com.abusei.Abusei.repositorys.EstadoRepository;
 import br.com.abusei.Abusei.repositorys.FavoritoRepository;
+import br.com.abusei.Abusei.repositorys.ImagemRepository;
 import br.com.abusei.Abusei.repositorys.ProdutoRepository;
 import br.com.abusei.Abusei.repositorys.UserRepository;
 
@@ -49,6 +52,8 @@ public class ProdutoController {
 	private FavoritoRepository favoritoRepository;
 	@Autowired
 	private EstadoRepository estadoRepository;
+	@Autowired
+	private ImagemRepository imagemRepository;
 
 	@GetMapping
 	public String listar(@RequestParam(defaultValue = "1") int page, Model model) {
@@ -74,6 +79,15 @@ public class ProdutoController {
 	public String produto(@PathVariable("link") String link, RequisicaoNovoComentario requisicao, Model model) {
 		Produto produto = produtoRepository.findByLink(link);
 		model.addAttribute("produto", produto);
+		
+		List<Imagem> imagens = imagemRepository.findByProduto(produto);
+		model.addAttribute("imagens", imagens);
+		
+		imagens.forEach(img -> {
+			if(Arrays.equals(img.getImagem(), produto.getImagem())) {
+				model.addAttribute("idImagemPrincipal", img.getId());
+			}
+		});
 
 		List<Comentario> comentarios = comentarioRepository.findByProduto(produto);
 		model.addAttribute("comentarios", comentarios);
