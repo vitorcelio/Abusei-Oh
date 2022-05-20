@@ -33,14 +33,21 @@ public class CadastroController{
 	public String cadastrar(@Valid RequisicaoCadastrarUsuario requisicao, BindingResult result, Model model) {
 		
 		User userVerifica = userRepository.findByUsername(requisicao.getUsername());
+		User userVerificaEmail = userRepository.findByUsername(requisicao.getEmail());
 		
 		if(result.hasErrors()) {
 			if(userVerifica != null) model.addAttribute("erro", "Este nome de usuário não está disponível!") ;
+			if(userVerificaEmail != null) model.addAttribute("erroEmail", "Este email não está disponível!") ;
 			return "cadastrar";
 		}
 		
 		if(userVerifica != null) {
 			model.addAttribute("erro", "Este nome de usuário não está disponível!") ;
+			return "cadastrar";
+		}
+		
+		if(userVerificaEmail != null) {
+			model.addAttribute("erroEmail", "Este email não está disponível!") ;
 			return "cadastrar";
 		}
 		

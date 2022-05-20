@@ -78,6 +78,7 @@
                     <div class="invalid-feedback" th:errors="*{email}">
 						erro
 					</div>
+					<div th:text="${erroEmail}" class="text-danger fonte-p"></div>
 
                     <label class="fw-bold mt-2">Senha</label>
                     <input th:field="*{senha}" th:errorclass="is-invalid" type="password" id="senha" class="form-control mt-1" placeholder="Digite sua senha">
