@@ -599,7 +599,6 @@ public class UserController {
 				
 				byte[] bytes = file.getBytes();
 				user.setFotoPerfil(bytes);
-				userRepository.save(user);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -607,6 +606,7 @@ public class UserController {
 			}
 		}
 		
+		userRepository.save(user);
 		return "redirect:/dashboard/configuracoes";
 	}
 	
@@ -625,7 +625,6 @@ public class UserController {
 				
 				byte[] bytes = file.getBytes();
 				user.setFotoCapa(bytes);
-				userRepository.save(user);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -633,6 +632,7 @@ public class UserController {
 			}
 		}
 		
+		userRepository.save(user);
 		return "redirect:/dashboard/configuracoes";
 	}
 	
