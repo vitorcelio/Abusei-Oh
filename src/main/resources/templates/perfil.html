@@ -120,7 +120,7 @@
 						<div th:each="produto : ${produtos}" class="col-6 col-sm-4 col-md-3 mt-3">
 	                        <a th:href="@{'/produtos/' + ${produto.link}}" class="text-decoration-none text-dark">
 	                            <div class="card mb-3 border-0">
-		                            <div th:if="${produto.imagem != null}" class="img-card bg-azul-branco-claro rounded-2" th:style="'background-image: url(' + ${produto.imagem} + ');'"></div>
+		                            <div th:if="${produto.imagem != null}" class="img-card bg-azul-branco-claro rounded-2" th:style="'background-image: url(/imagem/mostrarProduto/' + ${produto.id} + ');'"></div>
 		                            <div th:if="${produto.imagem == null}" class="img-card bg-azul-branco-claro rounded-2" style="background-image: url('/img/sem-imagem.png');"></div>
 	                                <div class="card-body">
 	                                    <h6 class="card-title" th:text="${produto.nome}">Carro chevrolet onix 2021</h6>

@@ -3,6 +3,7 @@ package br.com.abusei.Abusei.dto.anuncio;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 
 import javax.validation.constraints.Max;
@@ -202,7 +203,7 @@ public class RequisicaoCadastrarAnuncio {
 			}
 		}
 
-		produto.setData(LocalDateTime.now());
+		produto.setData(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 		produto.setLink(linkAleatorio);
 
 		return produto;
