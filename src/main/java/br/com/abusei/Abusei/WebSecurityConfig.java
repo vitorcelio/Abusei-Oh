@@ -24,7 +24,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 			.authorizeRequests()
 			.antMatchers("/dashboard/**").hasRole("USER")
-			.antMatchers(HttpMethod.POST, "/cadastrar").hasRole("ADMIN")
 			.antMatchers(HttpMethod.POST, "/atualizarPrivacidade").hasRole("ADMIN")
 			.antMatchers("/**").permitAll()
 			.anyRequest()
